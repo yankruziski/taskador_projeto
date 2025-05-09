@@ -1,83 +1,45 @@
-# Boilerplate MVC em Node.js com PostgreSQL
 
-Este projeto é um boilerplate básico para uma aplicação Node.js seguindo o padrão MVC (Model-View-Controller), utilizando PostgreSQL como banco de dados.
+# Taskador
 
-## Requisitos
+## Yan Dimitri Kruziski
+Gerenciador de tarefas moderno e intuitivo para organização e produtividade pessoal. Permite criar, editar, concluir, filtrar e acompanhar tarefas futuras com armazenamento seguro e sincronização em tempo real (Supabase). Ideal para planejamento claro e eficiente.
 
-- Node.js (versão X.X.X)
-- PostgreSQL (versão X.X.X)
+### Requisitos
 
-## Instalação
+- Node.js (versão v22.13.1)
+- PostgreSQL (versão 15.8)
 
-1. **Clonar o repositório:**
+### Estrutura de Pastas 
 
-```bash
-   git clone https://github.com/seu-usuario/seu-projeto.git
-   cd seu-projeto
-```
+controllers: Contém os controladores, responsáveis por receber as requisições do cliente, processar os dados (geralmente interagindo com os modelos) e retornar as respostas apropriadas. Cada controlador geralmente corresponde a uma entidade ou recurso da aplicação.
 
-2. **Instalar as dependências:**
-    
-```bash
-npm install
-```
-    
-3. **Configurar o arquivo `.env`:**
-    
-Renomeie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente necessárias, como as configurações do banco de dados PostgreSQL.
-    
+models: Abriga os modelos de dados, que definem a estrutura das entidades da aplicação e encapsulam a lógica de acesso ao banco de dados. Utilizando ORMs como Sequelize ou Mongoose, os modelos representam as tabelas ou coleções do banco de dados e fornecem métodos para manipulação dos dados.
 
-Configuração do Banco de Dados
-------------------------------
+views: Contém as visualizações, responsáveis pela apresentação dos dados ao usuário. Utilizando motores de template como EJS, Handlebars ou Pug, as views geram o HTML que será renderizado no navegador.
+routes:Define as rotas da aplicação, mapeando os endpoints às funções correspondentes nos controladores. Essa separação permite uma organização clara das rotas e facilita a manutenção.
 
-1. **Criar banco de dados:**
-    
-    Crie um banco de dados PostgreSQL com o nome especificado no seu arquivo `.env`.
-    
-2. **Executar o script SQL de inicialização:**
-    
-```bash
-npm run init-db
-```
-    
-Isso criará a tabela `users` no seu banco de dados PostgreSQL com UUID como chave primária e inserirá alguns registros de exemplo.
-    
+public: Armazena arquivos estáticos acessíveis diretamente pelo navegador, como folhas de estilo (CSS), scripts JavaScript do lado do cliente, imagens e fontes. Esses arquivos são servidos sem processamento adicional pelo servidor.
 
-Funcionalidades
----------------
+config: Contém arquivos de configuração da aplicação, como as configurações de conexão com o banco de dados, variáveis de ambiente e outras configurações globais. Centralizar essas configurações facilita a gestão e a alteração de parâmetros sem modificar o código-fonte principal.
 
-* **Padrão MVC:** Estrutura organizada em Model, View e Controller.
-* **PostgreSQL:** Banco de dados relacional utilizado para persistência dos dados.
-* **UUID:** Utilização de UUID como chave primária na tabela `users`.
-* **Scripts com `nodemon`:** Utilização do `nodemon` para reiniciar automaticamente o servidor após alterações no código.
-* **Testes:** Inclui estrutura básica para testes automatizados.
+services: Inclui serviços que encapsulam a lógica de negócio da aplicação, separando-a dos controladores. Essa camada permite reutilizar funcionalidades em diferentes partes da aplicação e manter os controladores mais enxutos.
 
-Scripts Disponíveis
--------------------
+middlewares: Contém funções intermediárias que processam as requisições antes de chegarem aos controladores. Exemplos comuns incluem autenticação, validação de dados e registro de logs.
 
-* `npm start`: Inicia o servidor Node.js.
-* `npm run dev`: Inicia o servidor com `nodemon`, reiniciando automaticamente após alterações no código.
-* `npm run test`: Executa os testes automatizados.
-* `npm run test:coverage`: Executa os testes e gera um relatório de cobertura de código.
+repositories: Implementa a camada de acesso a dados, abstraindo as operações de leitura e escrita no banco de dados. Essa separação permite trocar ou modificar a fonte de dados com impacto mínimo nas outras partes da aplicação.
 
-Estrutura de Diretórios
------------------------
+utils: Armazena funções utilitárias e helpers que são usadas em diversas partes da aplicação, como formatação de datas, geração de IDs únicos e outras funções auxiliares.
 
-* **`config/`**: Configurações do banco de dados e outras configurações do projeto.
-* **`controllers/`**: Controladores da aplicação (lógica de negócio).
-* **`models/`**: Modelos da aplicação (definições de dados e interações com o banco de dados).
-* **`routes/`**: Rotas da aplicação.
-* **`tests/`**: Testes automatizados.
-* **`views/`**: Views da aplicação (se aplicável).
+### Acessando os conteúdos
+Para utilizar o projeto:
 
-Contribuição
-------------
+Baixe o repositório no GitHub, conecte-se ao Supabase e 
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um issue ou enviar um pull request.
+execute os comandos:
 
-Licença
--------
+```npm install```
 
-Este projeto está licenciado sob a Licença MIT.
+```npm run init-db```
 
-Este README.md fornece uma visão geral clara do boilerplate, incluindo instruções de instalação, configuração do banco de dados, funcionalidades principais, scripts disponíveis, estrutura de diretórios, como contribuir e informações de licença. Certifique-se de personalizar as seções com detalhes específicos do seu projeto conforme necessário.
+Acesse a aplicação no navegador pelo endereço: http://localhost:3000
+

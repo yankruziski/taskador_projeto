@@ -6,9 +6,13 @@ const PORT = 3000;
 app.use(express.json());
 
 // Rotas
-const routes = require('./routes/index');
-app.use('/', routes);
+//const routes = require('./routes/index');
+//app.use('/', routes);
 
+
+app.get("/", (req, res) => {
+  res.send("Taskador")
+})
 // Inicializa o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
