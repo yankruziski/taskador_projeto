@@ -82,15 +82,15 @@ Nesse modelo, os dados são organizados em tabelas (ou relações), onde cada um
 
 ### 3.2. Arquitetura (Semana 5)
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
+A estrutura segue um padrão MVC, que está organizado de forma clara e modular. O cliente acessa o sistema via navegador, assim interagindo com as Views, sendo responsáveis por exibir formulários e listas para usuários, tarefas e categorias. As Views então se comunicam com os Controllers (UserController, TaskController e CategorieController), que gerenciam as ações de listar, gravar, deletar e procurar dados. Os Controllers manipulam os Models (user, task e categorie), que representam diretamente as tabelas do banco de dados com seus respectivos atributos. Os Models interagem com o servidor de banco de dados, garantindo a persistência das informações. Essa separação de responsabilidades facilita a manutenção, escalabilidade e organização do sistema.
 
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
+<div align="center">
+<sub>Figura x - Arquitetura MVC</sub>
+<img src="./assets/arquitetutaMVC.png" width="100%">
+<sup>Fonte: Material produzido pelo autor (2025)</sup>
+</div>
+<br>
   
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
-
 ### 3.3. Wireframes (Semana 03)
 
 *Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*

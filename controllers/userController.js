@@ -1,64 +1,35 @@
-// controllers/userController.js
+// services/userService.js
+const pool = require('../config/database');
 
-const userService = require('../services/userService');
-
-const getAllUsers = async (req, res) => {
-  try {
-    const users = await userService.getAllUsers();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const getAllUsers = async () => {
+  const res = await pool.query('SELECT * FROM "user"');
+  return res.rows;
 };
 
-const getUserById = async (req, res) => {
-  try {
-    const user = await userService.getUserById(req.params.id);
-    if (user) {
-      res.status(200).json(user);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const getUserById = async (id) => {
+  const res = await pool.query('SELECT * FROM "user" WHERE id = $1', [id]);
+  return res.rows[0];
 };
 
-const createUser = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const newUser = await userService.createUser(name, email);
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const createUser = async (name_user) => {
+  const res = await pool.query(
+    'INSERT INTO "user" (name_user) VALUES ($1) RETURNING *',
+    [name_user]
+  );
+  return res.rows[0];
 };
 
-const updateUser = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const updatedUser = await userService.updateUser(req.params.id, name, email);
-    if (updatedUser) {
-      res.status(200).json(updatedUser);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const updateUser = async (id, name_user) => {
+  const res = await pool.query(
+    'UPDATE "user" SET name_user = $1 WHERE id = $2 RETURNING *',
+    [name_user, id]
+  );
+  return res.rows[0];
 };
 
-const deleteUser = async (req, res) => {
-  try {
-    const deletedUser = await userService.deleteUser(req.params.id);
-    if (deletedUser) {
-      res.status(200).json(deletedUser);
-    } else {
-      res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const deleteUser = async (id) => {
+  const res = await pool.query('DELETE FROM "user" WHERE id = $1 RETURNING *', [id]);
+  return res.rows[0];
 };
 
 module.exports = {
@@ -66,5 +37,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };
