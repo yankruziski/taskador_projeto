@@ -1,9 +1,11 @@
 // services/userService.js
 const pool = require('../config/database');
+const User = require("../models/userModel")
 
-const getAllUsers = async () => {
-  const res = await pool.query('SELECT * FROM "user"');
-  return res.rows;
+
+const getAllUsers = async (req, res) => {
+  const users = await User.getAll()
+  return res.status(200).json(users)
 };
 
 const getUserById = async (id) => {
@@ -11,12 +13,17 @@ const getUserById = async (id) => {
   return res.rows[0];
 };
 
-const createUser = async (name_user) => {
-  const res = await pool.query(
-    'INSERT INTO "user" (name_user) VALUES ($1) RETURNING *',
-    [name_user]
-  );
-  return res.rows[0];
+const createUser = async (req, res) => {
+  const { name, email } = req.body
+
+  if (!name, email) {
+    return res.status(400).send("Bad request")
+  }
+
+  const newUser = await User.create({
+    nome: name,
+    email
+  })
 };
 
 const updateUser = async (id, name_user) => {
