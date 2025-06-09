@@ -1,54 +1,176 @@
-<h2>Página 1</h2>
-<p>Lista de Usuários:</p>
+<h2>Lista de Tarefas</h2>
 
-<table border="1" id="usersTable">
+<!-- Formulário para adicionar nova tarefa -->
+<form id="newTaskForm" class="form-task">
+  <input type="text" id="taskName" placeholder="Nome da Tarefa" required />
+  <input type="text" id="taskDescription" placeholder="Descrição da Tarefa" required />
+  <input type="date" id="taskDueDate" required />
+  <select id="taskCategorie" required>
+    <option value="">Selecione uma categoria</option>
+    <!-- Opções serão preenchidas via JS -->
+  </select>
+  <button type="submit" class="btn create">
+    <i class="fas fa-plus"></i> Adicionar Tarefa
+  </button>
+</form>
+
+<!-- Tabela de tarefas -->
+<table id="taskTable" class="table-modern">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Nome</th>
-      <th>Email</th>
+      <th>Descrição</th>
+      <th>Data início</th>
+      <th>Data fim</th>
+      <th>Categoria</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td colspan="3">Carregando usuários...</td>
+      <td colspan="6">Carregando tasks...</td>
     </tr>
   </tbody>
 </table>
 
 <script>
-  // Função para buscar usuários da API e renderizar na tabela
-  async function fetchUsers() {
+  // Buscar tarefas
+  async function fetchTasks() {
     try {
-      const response = await fetch('/api/users');
-      if (!response.ok) {
-        throw new Error('Erro ao buscar usuários');
-      }
-      const users = await response.json();
+      const response = await fetch('/api/tasks');
+      if (!response.ok) throw new Error('Erro ao buscar as tasks');
+      const tasks = await response.json();
 
-      const tableBody = document.querySelector('#usersTable tbody');
-      tableBody.innerHTML = ''; // Limpa o conteúdo anterior
+      const tableBody = document.querySelector('#taskTable tbody');
+      tableBody.innerHTML = '';
 
-      if (users.length > 0) {
-        users.forEach(user => {
+      if (tasks.length > 0) {
+        tasks.forEach(task => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
+            <td>${task.name_tasks}</td>
+            <td>${task.description_task}</td>
+            <td>${task.start_date ? new Date(task.start_date).toLocaleDateString() : ''}</td>
+            <td>${task.finish_date ? new Date(task.finish_date).toLocaleDateString() : ''}</td>
+            <td>${task.name_categorie || ''}</td>
+            <td class="actions">
+              <button class="btn edit" onclick="editTask('${task.id}')">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn delete" onclick="deleteTask('${task.id}')">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
           `;
           tableBody.appendChild(row);
         });
       } else {
-        tableBody.innerHTML = '<tr><td colspan="3">Nenhum usuário encontrado.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6">Nenhuma task encontrada.</td></tr>';
       }
     } catch (error) {
       console.error(error);
-      const tableBody = document.querySelector('#usersTable tbody');
-      tableBody.innerHTML = '<tr><td colspan="3">Erro ao carregar usuários.</td></tr>';
+      document.querySelector('#taskTable tbody').innerHTML =
+        '<tr><td colspan="6">Erro ao carregar tasks.</td></tr>';
     }
   }
 
-  // Chama a função ao carregar a página
-  fetchUsers();
+  // Deletar task
+  function deleteTask(id) {
+    if (confirm("Tem certeza que deseja deletar esta task?")) {
+      fetch(`/api/tasks/${id}`, { method: 'DELETE' })
+        .then(res => res.ok ? fetchTasks() : alert('Erro ao deletar a task'));
+    }
+  }
+
+  // Editar task inline
+  async function editTask(id) {
+    const row = document.querySelector(`button[onclick="editTask('${id}')"]`).closest('tr');
+    const nameCell = row.children[0];
+    const descCell = row.children[1];
+    const finishCell = row.children[3];
+
+    // Salva valores antigos
+    const oldName = nameCell.textContent;
+    const oldDesc = descCell.textContent;
+    const oldFinish = finishCell.textContent;
+
+    // Troca por inputs
+    nameCell.innerHTML = `<input type="text" value="${oldName}" id="editName${id}">`;
+    descCell.innerHTML = `<input type="text" value="${oldDesc}" id="editDesc${id}">`;
+    finishCell.innerHTML = `<input type="date" value="${formatDateForInput(oldFinish)}" id="editFinish${id}">`;
+
+    // Troca botões
+    row.querySelector('.edit').outerHTML = `<button class="btn save" onclick="saveEditTask('${id}')"><i class="fas fa-check"></i></button>`;
+    row.querySelector('.delete').disabled = true;
+  }
+
+  // Função para salvar edição
+  async function saveEditTask(id) {
+    const name_tasks = document.getElementById(`editName${id}`).value;
+    const description_task = document.getElementById(`editDesc${id}`).value;
+    const finish_date = document.getElementById(`editFinish${id}`).value;
+
+    const res = await fetch(`/api/tasks/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name_tasks, description_task, finish_date })
+    });
+    if (res.ok) {
+      fetchTasks();
+    } else {
+      alert('Erro ao editar a task');
+    }
+  }
+
+  // Helper para converter data dd/mm/yyyy para yyyy-mm-dd
+  function formatDateForInput(dateStr) {
+    const [day, month, year] = dateStr.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  }
+
+  // Submeter nova task
+  document.getElementById('newTaskForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const name_tasks = document.getElementById('taskName').value;
+    const description_task = document.getElementById('taskDescription').value;
+    const start_date = new Date().toISOString().split('T')[0]; // data de hoje
+    const finish_date = document.getElementById('taskDueDate').value;
+    const user_id = 1; // ajuste conforme sua lógica
+    const categorie_id = document.getElementById('taskCategorie').value;
+
+    try {
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name_tasks, description_task, start_date, finish_date, user_id, categorie_id })
+      });
+
+      if (res.ok) {
+        this.reset();
+        fetchTasks();
+      } else {
+        alert('Erro ao adicionar a task');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Erro de conexão');
+    }
+  });
+
+  // Carregar tasks ao iniciar
+  fetchTasks();
+
+  async function fetchCategories() {
+  const res = await fetch('/api/categories'); // Ajuste a rota conforme seu backend
+  const categories = await res.json();
+  const select = document.getElementById('taskCategorie');
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat.id;
+    option.textContent = cat.name_categorie;
+    select.appendChild(option);
+  });
+}
+fetchCategories();
 </script>

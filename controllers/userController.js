@@ -8,21 +8,20 @@ const getAllUsers = async (req, res) => {
   return res.status(200).json(users)
 };
 
-const getUserById = async (id) => {
-  const res = await pool.query('SELECT * FROM "user" WHERE id = $1', [id]);
-  return res.rows[0];
+const getUserById = async (req, res) => {
+  const users = await User.getById()
+  return res.status(200).json(users)
 };
 
 const createUser = async (req, res) => {
-  const { name, email } = req.body
+  const {name} = req.body
 
-  if (!name, email) {
+  if (!name) {
     return res.status(400).send("Bad request")
   }
 
   const newUser = await User.create({
     nome: name,
-    email
   })
 };
 

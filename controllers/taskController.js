@@ -3,23 +3,28 @@ const pool = require('../config/database');
 
 // Criar uma nova tarefa
 exports.criarTarefa = async (req, res) => {
-  const { name_task, description_task, start_date, finish_date, user_id, categorie_id } = req.body;
-
-  const query = 'INSERT INTO task (name_task, description_task, start_date, finish_date, user_id, categorie_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
-  const values = [name_task, description_task, start_date, finish_date, user_id, categorie_id];
+  const { name_tasks, description_task, start_date, finish_date, user_id, categorie_id } = req.body;
 
   try {
+    const query = 'INSERT INTO task (name_tasks, description_task, start_date, finish_date, user_id, categorie_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+    const values = [name_tasks, description_task, start_date, finish_date, user_id, categorie_id];
     const result = await pool.query(query, values);
-    const tarefa = result.rows[0];
-    res.status(201).json(tarefa);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao criar tarefa' });
   }
 };
 
 // Listar todas as tarefas
 exports.listarTarefas = async (req, res) => {
-  const query = 'SELECT * FROM task';
+  const query = `
+    SELECT 
+      task.*, 
+      categorie.name_categorie 
+    FROM task
+    LEFT JOIN categorie ON task.categorie_id = categorie.id
+  `;
 
   try {
     const result = await pool.query(query);
@@ -32,21 +37,16 @@ exports.listarTarefas = async (req, res) => {
 // Editar uma tarefa
 exports.editarTarefa = async (req, res) => {
   const { id } = req.params;
-  const { name_task, description_task, start_date, finish_date} = req.body;
-
-  const query = `
-    UPDATE task SET name_task = $1, description_task = $2, start_date = $3, finish_date = $4
-    WHERE id = $5 RETURNING *`;
-  const values = [name_task, description_task, start_date, finish_date, id];
+  const { name_tasks, description_task, finish_date } = req.body;
 
   try {
+    const query = 'UPDATE task SET name_tasks = $1, description_task = $2, finish_date = $3 WHERE id = $4 RETURNING *';
+    const values = [name_tasks, description_task, finish_date, id];
     const result = await pool.query(query, values);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Tarefa não encontrada' });
-    }
-    res.status(200).json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao editar tarefa' });
   }
 };
 

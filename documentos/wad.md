@@ -110,8 +110,13 @@ A estrutura segue um padrão MVC, que está organizado de forma clara e modular.
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+O frontend do Taskador foi desenvolvido com o intuito de ser simples, intuitivo e responsivo, facilitando o gerenciamento de tarefas diárias.
 
+Ao acessar a aplicação, o usuário é direcionado para a tela de login, onde informa seu nome para acessar o sistema. Após o login, o usuário é levado para a página principal de tarefas.
+
+Na página, o usuário encontra um formulário no topo para adicionar novas tarefas. Basta preencher o nome, descrição, data de conclusão e selecionar uma categoria. Ao clicar em "Adicionar Tarefa", a nova tarefa é enviada para o backend e imediatamente exibida na tabela abaixo.
+
+A tabela de tarefas exibe todas as tarefas cadastradas, mostrando nome, descrição, data de início, data de fim, categoria e opções de ações. O usuário pode editar uma tarefa clicando no ícone de lápis, o que transforma a linha em campos editáveis. Após ajustar as informações, basta clicar no botão de confirmação para salvar as alterações. Também é possível excluir uma tarefa clicando no ícone de lixeira.
 ---
 
 ## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)

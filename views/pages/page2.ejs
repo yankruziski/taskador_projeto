@@ -1,2 +1,6 @@
-<h2>Página 2</h2>
-<p>Conteúdo da Página 2.</p>
+<h2>Entrar</h2>
+<form method="POST" action="/login">
+  <input type="text" name="username" placeholder="Seu nome" required />
+  <button type="submit">Entrar</button>
+</form>
+<p>Bem-vindo, <%= username %>!</p>

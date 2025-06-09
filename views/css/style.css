@@ -1,60 +1,233 @@
-/* Reset básico para remover estilos padrão do navegador */
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+  background: #f7fafd;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #222;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* Cabeçalho (navbar) */
+header {
+  background: #fff;
+  color: #1976d2;
+  padding: 18px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(60, 64, 67, 0.08);
+  border-bottom: 1px solid #e3e6ea;
+}
+
+header nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li {
+  display: inline-block;
+  margin: 0 18px;
+}
+
+header nav ul li a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+header nav ul li a:hover {
+  background: #e3f0fd;
+  color: #1565c0;
+}
+
+/* Conteúdo principal */
+main {
+  padding: 30px 10px 80px 10px;
+}
+
+/* Rodapé */
+footer {
+  background: #fff;
+  color: #1976d2;
+  text-align: center;
+  padding: 14px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 1em;
+  border-top: 1px solid #e3e6ea;
+  box-shadow: 0 -2px 8px rgba(60, 64, 67, 0.08);
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-top: 2rem;
+  letter-spacing: 1px;
+  color: #1976d2;
+  text-shadow: none;
+}
+
+p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #5f6368;
+}
+
+/* Formulário de tarefa */
+.form-task {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto 2.5rem auto;
+  max-width: 700px;
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px 0 rgba(60, 64, 67, 0.10);
+  border: 1px solid #e3e6ea;
+}
+
+.form-task input, .form-task select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #e3e6ea;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f7fafd;
+  color: #222;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-task input:focus, .form-task select:focus {
+  border: 1.5px solid #1976d2;
+  background: #e3f0fd;
+}
+
+.btn {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(60, 64, 67, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn.create {
+  background: linear-gradient(90deg, #42a5f5 0%, #00bcd4 100%);
+  color: #fff;
+}
+
+.btn.create:hover {
+  background: linear-gradient(90deg, #1976d2 0%, #00acc1 100%);
+  transform: scale(1.05);
+}
+
+.btn.edit {
+  background: #1976d2;
+}
+
+.btn.edit:hover {
+  background: #00acc1;
+  transform: scale(1.1);
+}
+
+.btn.delete {
+  background: #e53935;
+}
+
+.btn.delete:hover {
+  background: #ffd600;
+  color: #222;
+  transform: scale(1.1);
+}
+
+#taskTable {
+  width: 95%;
+  margin: 2rem auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px 0 rgba(60, 64, 67, 0.10);
+  border: 1px solid #e3e6ea;
+}
+
+#taskTable thead {
+  background: #e3f0fd;
+  color: #1976d2;
+}
+
+#taskTable th,
+#taskTable td {
+  padding: 1rem 1.2rem;
+  text-align: center;
+}
+
+#taskTable th {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+#taskTable tr {
+  transition: background 0.2s;
+}
+
+#taskTable tbody tr:nth-child(even) {
+  background: #f7fafd;
+}
+
+#taskTable tbody tr:hover {
+  background: #e3f0fd;
+}
+
+#taskTable td.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .form-task, #taskTable {
+    width: 98%;
+    flex-direction: column;
+    padding: 1rem;
   }
-  
-  /* Estilo para o corpo da página */
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Estilo para o cabeçalho */
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
-  }
-  
-  /* Estilo para a navegação dentro do cabeçalho */
-  header nav ul {
-    list-style-type: none;
-  }
-  
-  header nav ul li {
-    display: inline;
-    margin-right: 20px;
-  }
-  
-  header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  header nav ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Estilo para o conteúdo principal */
-  main {
-    padding: 20px;
-  }
-  
-  /* Estilo para o rodapé */
-  footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
+  .form-task input, .form-task select, .btn {
     width: 100%;
+    margin-bottom: 0.5rem;
   }
-  
+  #taskTable th, #taskTable td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.95rem;
+  }
+  header nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+  #taskTable td.actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

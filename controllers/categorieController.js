@@ -1,5 +1,6 @@
 // controllers/categorieController.js
 const categorieService = require('../services/categorieService');
+const Categorie = require("../models/categorieModel")
 
 const getAllCategories = async (req, res) => {
   try {
