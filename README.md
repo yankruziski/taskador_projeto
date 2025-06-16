@@ -41,5 +41,26 @@ execute os comandos:
 
 ```npm run init-db```
 
-Acesse a aplicação no navegador pelo endereço: http://localhost:3000
+```npm run dev```
+Acesse a aplicação no navegador pelo endereço: http://localhost:3001
 
+### Uso do projeto
+O sistema foi desenvolvido com foco na simplicidade e consiste em uma única interface principal. Ao ser executado no navegador a partir de http://localhost:3001, a aplicação permite ao usuário realizar as operações essenciais de gerenciamento de tarefas: criar, ler, editar e deletar (CRUD).
+<div align="center">
+<sub>Figura 1 - Tela inicial Taskador
+<img src="documentos\assets\tela_inicio_taskador.png" width="100%">
+<sup>Fonte: Material produzido pelo autor (2025)</sup>
+</div>
+<br>
+
+Após adicionarmos uma tarefa, ela aparecerá no sistema, desta maneira abaixo.
+
+<div align="center">
+<sub>Figura 2 - Task Adicionada
+<img src="documentos\assets\task_adicionada.png" width="100%">
+<sup>Fonte: Material produzido pelo autor (2025)</sup>
+</div>
+<br>
+
+Abaixo, podemos ver um vídeo demonstrando as funcionalidades e a arquitetura do software
+<https://youtu.be/mOFWCsHm7EQ>

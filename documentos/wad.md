@@ -106,7 +106,13 @@ A estrutura segue um padrão MVC, que está organizado de forma clara e modular.
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+O projeto taskador_projeto utiliza a arquitetura MVC (Model-View-Controller) para separar as responsabilidades do código.
+
+A camada Model define a estrutura dos dados essenciais, como task (tarefas), categorie (categorias) e user (usuários). Cada entidade corresponde a uma tabela no banco de dados e é a principal responsável por gerenciar o formato e o armazenamento das informações.
+
+O Controller, por sua vez, centraliza a lógica de negócio. Em arquivos como taskController.js, ele recebe as requisições, processa as informações e aciona o Model para realizar operações de criação, leitura, atualização ou exclusão de registros. Ele atua como o intermediário que rege o fluxo de dados.
+
+Já a View é a camada de apresentação visual, composta por arquivos EJS. Ela é responsável por exibir a interface ao usuário — como formulários e tabelas nas páginas (page1.ejs, page2.ejs) e elementos reutilizáveis (header.ejs). Enquanto a View se concentra em apresentar os dados, o Controller assegura que essas informações sejam atualizadas corretamente de acordo com as interações do usuário.
 
 ### 3.7 Interface e Navegação (Semana 07)
 
@@ -122,14 +128,12 @@ A tabela de tarefas exibe todas as tarefas cadastradas, mostrando nome, descriç
 ## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
-
-*VIDEO: Insira o link do vídeo demonstrativo nesta seção*
-*Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+Abaixo podemos ver o link do vídeo de demonstração, que mostra funcionalidades e detalhes sobre o diagrama MVC.
+<https://youtu.be/mOFWCsHm7EQ>
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
+Durante o desenvolvimento, aprimorei minha compreensão sobre o funcionamento do padrão MVC, das operações CRUD e da forma como os diferentes componentes do código interagem. A ideia, futuramente, é evoluir a aplicação com a adição de perfis de usuário e uma funcionalidade de login.
 
-*Indique pontos fortes e pontos a melhorar de maneira geral.*
-*Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
 
 
 
